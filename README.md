@@ -23,7 +23,6 @@ dc = DataCanvas(root)
 dc.pack(side="top", expand=1, fill="both")
 
 # Display the contents of some CSV file
-# (note this is not a particularly efficient viewer)
 with io.open("test.csv", "r", newline="") as csv_file:
     reader = csv.reader(csv_file)
     parsed_rows = 0

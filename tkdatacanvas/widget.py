@@ -350,14 +350,26 @@ class DataCanvas(tk.Frame):
 
                 # Get cell attributes...
                 anchor = cell["anchor"]
-                bg_color = cell["background"]
-                fg_color = cell["foreground"]
+
+                if "bg" in cell:
+                    bg_color = cell["bg"]
+                elif "background" in cell:
+                    bg_color = cell["background"]
+                else:
+                    bg_color = self.bg_color
+
+                if "fg" in cell:
+                    fg_color = cell["fg"]
+                elif "foreground" in cell:
+                    fg_color = cell["foreground"]
+                else:
+                    fg_color = self.fg_color
 
                 # ...and delete the associated keywords so they won't
                 # cause problems with the canvas methods
-                del cell["anchor"]
-                del cell["background"]
-                del cell["foreground"]
+                for key in ("anchor", "bg", "fg", "background", "foreground"):
+                    if key in cell:
+                        del cell[key]
 
                 # Figure out where to position the text. Since we're drawing
                 # directly on the canvas rather than using a Label widget,

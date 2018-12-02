@@ -367,7 +367,8 @@ class DataCanvas(tk.Frame):
 
                 # ...and delete the associated keywords so they won't
                 # cause problems with the canvas methods
-                for key in ("anchor", "bg", "fg", "background", "foreground"):
+                for key in ("width", "anchor",
+                            "bg", "fg", "background", "foreground"):
                     if key in cell:
                         del cell[key]
 

@@ -458,6 +458,9 @@ class DataCanvas(tk.Frame):
         # Reset the length of the longest row added
         self._row_max = 0
 
+        # Scroll to the top-left corner
+        self.scroll_to_top()
+
     def scroll_to_top(self):
         """Scroll to the top-left corner of the canvas."""
 

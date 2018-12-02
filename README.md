@@ -2,6 +2,8 @@
 
 tkDataCanvas is designed to be simple above all else. It has no dependencies outside the Python standard library. Its API is designed to let you accomplish tasks with as few method calls as possible.
 
+Both Python 2 and 3 are supported, on Windows and Unix platforms.
+
 ## Usage
 
 tkDataCanvas consists of a single module, `tkdatacanvas` (note the module name is lowercase), which exports a single class, `DataCanvas`.

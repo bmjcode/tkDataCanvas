@@ -39,7 +39,7 @@ from . import DataCanvas
 class DataCanvasDemo(Frame):
     """A demonstration of the DataCanvas widget."""
 
-    def __init__(self, master=None, *, custom_colors=False):
+    def __init__(self, master=None, custom_colors=False):
         Frame.__init__(self, master)
         self.master = master
 
@@ -144,7 +144,7 @@ def demo():
     else:
         custom_colors = False
 
-    d = DataCanvasDemo(root, custom_colors=custom_colors)
+    d = DataCanvasDemo(root, custom_colors)
     d.pack(side="top", expand=1, fill="both")
 
     # If a CSV file was named on the command line, display it

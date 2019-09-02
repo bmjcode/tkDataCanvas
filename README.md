@@ -11,7 +11,8 @@ tkDataCanvas consists of a single module, `tkdatacanvas` (note the module name i
 A brief example program:
 
 ```python
-# This assumes Python 3
+#!/usr/bin/env python3
+
 from tkinter import *
 from tkdatacanvas import DataCanvas
 import io

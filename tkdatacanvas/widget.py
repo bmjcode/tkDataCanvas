@@ -60,13 +60,13 @@ class DataCanvas(tk.Frame):
             del kw["scrollbars"]
 
             if not scrollbars:
-                scrollbars = self._default_scrollbars
-            elif not scrollbars in self._valid_scrollbars:
+                scrollbars = self._DEFAULT_SCROLLBARS
+            elif not scrollbars in self._VALID_SCROLLBARS:
                 raise ValueError("scrollbars parameter must be one of "
                                  "'vertical', 'horizontal', 'both', or "
                                  "'neither'")
         else:
-            scrollbars = self._default_scrollbars
+            scrollbars = self._DEFAULT_SCROLLBARS
 
         # Whether to shade alternate rows
         if "shade_rows" in kw:
@@ -155,7 +155,7 @@ class DataCanvas(tk.Frame):
     def __setitem__(self, key, value):
         """Configure resources of a widget."""
 
-        if key in self._canvas_keys:
+        if key in self._CANVAS_KEYS:
             # Forward these to the canvas widget
             self._canvas.configure(**{key: value})
 
@@ -275,7 +275,7 @@ class DataCanvas(tk.Frame):
     def cget(self, key):
         """Return the resource value for a KEY given as string."""
 
-        if key in self._canvas_keys:
+        if key in self._CANVAS_KEYS:
             return self._canvas.cget(key)
 
         else:
@@ -513,11 +513,11 @@ class DataCanvas(tk.Frame):
     # ------------------------------------------------------------------------
 
     # Keys for configure() to forward to the canvas widget
-    _canvas_keys = "width", "height", "takefocus"
+    _CANVAS_KEYS = "width", "height", "takefocus"
 
     # Scrollbar-related configuration
-    _default_scrollbars = "both"
-    _valid_scrollbars = "vertical", "horizontal", "both", "neither"
+    _DEFAULT_SCROLLBARS = "both"
+    _VALID_SCROLLBARS = "vertical", "horizontal", "both", "neither"
 
     # Default colors for the grid
     bg_color = "white"

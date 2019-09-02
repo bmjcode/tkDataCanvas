@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """A simple spreadsheet viewer to demonstrate the tkDataCanvas module.
 
 Only comma-separated values (CSV) are currently supported.

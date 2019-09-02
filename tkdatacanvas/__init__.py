@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """A tabular data display widget for Tkinter.
 
 tkDataCanvas is a tabular data display widget for Python + Tkinter.

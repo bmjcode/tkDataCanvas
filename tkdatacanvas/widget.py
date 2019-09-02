@@ -31,6 +31,24 @@ class DataCanvas(tk.Frame):
     The constructor accepts the usual Tkinter keyword arguments, plus
     a handful of its own:
 
+      bg_color (str)
+        Default background color for ordinary rows.
+
+      bg_header (str)
+        Default background color for header rows.
+
+      bg_shade (str)
+        Default background color for shading alternate rows.
+
+      fg_color (str)
+        Default foreground color for ordinary rows.
+
+      fg_header (str)
+        Default foreground color for header rows.
+
+      fg_shade (str)
+        Default foreground color for shading alternate rows.
+
       scrollbars (str; default: "both")
         Which scrollbars to provide.
         Must be one of "vertical", "horizontal," "both", or "neither".
@@ -92,6 +110,20 @@ class DataCanvas(tk.Frame):
         if not "relief" in kw:
             kw["relief"] = "sunken"
 
+        # Default row colors
+        # Note: Releases prior to v0.1.1 exposed these attributes as
+        # public class variables, but this was not a documented feature
+        # and is no longer supported.
+        for attr in ("bg_color", "bg_header", "bg_shade",
+                     "fg_color", "fg_header", "fg_shade"):
+            attr_name = "_{0}".format(attr)
+            default_name = "_DEFAULT_{0}".format(attr.upper())
+            if attr in kw:
+                setattr(self, attr_name, kw[attr])
+                del kw[attr]
+            else:
+                setattr(self, attr_name, getattr(self, default_name))
+
         # Set up the grid
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
@@ -147,7 +179,7 @@ class DataCanvas(tk.Frame):
 
         if self._shade_rows:
             # Set the frame background to the default cell background
-            self.configure(background=self.bg_color)
+            self.configure(background=self._bg_color)
 
         # Process our remaining configuration options
         self.configure(**kw)
@@ -227,8 +259,8 @@ class DataCanvas(tk.Frame):
         """
 
         return self.add_row(*cells,
-                            background=self.bg_header,
-                            foreground=self.fg_header,
+                            background=self._bg_header,
+                            foreground=self._fg_header,
                             **kw)
 
     def add_row(self, *cells, **kw):
@@ -353,14 +385,14 @@ class DataCanvas(tk.Frame):
                 elif "background" in cell:
                     bg_color = cell["background"]
                 else:
-                    bg_color = self.bg_color
+                    bg_color = self._bg_color
 
                 if "fg" in cell:
                     fg_color = cell["fg"]
                 elif "foreground" in cell:
                     fg_color = cell["foreground"]
                 else:
-                    fg_color = self.fg_color
+                    fg_color = self._fg_color
 
                 # ...and delete the associated keywords so they won't
                 # cause problems with the canvas methods
@@ -479,15 +511,15 @@ class DataCanvas(tk.Frame):
 
         if not ("fg" in kw or "foreground" in kw):
             if self._row % 2 == 0:
-                kw["foreground"] = self.fg_shade
+                kw["foreground"] = self._fg_shade
             else:
-                kw["foreground"] = self.fg_color
+                kw["foreground"] = self._fg_color
 
         if not ("bg" in kw or "background" in kw):
             if self._row % 2 == 0:
-                kw["background"] = self.bg_shade
+                kw["background"] = self._bg_shade
             else:
-                kw["background"] = self.bg_color
+                kw["background"] = self._bg_color
 
     def _scroll_canvas(self, event):
         """Scroll the canvas."""
@@ -515,21 +547,21 @@ class DataCanvas(tk.Frame):
     # Keys for configure() to forward to the canvas widget
     _CANVAS_KEYS = "width", "height", "takefocus"
 
+    # Default colors for ordinary rows
+    _DEFAULT_BG_COLOR = "white"
+    _DEFAULT_FG_COLOR = "black"
+
+    # Default colors for header rows
+    _DEFAULT_BG_HEADER = "SteelBlue"
+    _DEFAULT_FG_HEADER = "white"
+
+    # Default colors for shading alternate rows
+    _DEFAULT_BG_SHADE = "LightSteelBlue"
+    _DEFAULT_FG_SHADE = "black"
+
     # Scrollbar-related configuration
     _DEFAULT_SCROLLBARS = "both"
     _VALID_SCROLLBARS = "vertical", "horizontal", "both", "neither"
-
-    # Default colors for the grid
-    bg_color = "white"
-    fg_color = "black"
-
-    # Shade colors for alternate rows
-    bg_shade = "LightSteelBlue"
-    fg_shade = "black"
-
-    # Colors for header rows
-    bg_header = "SteelBlue"
-    fg_header = "white"
 
     # Default padding for cells
     pad_x = 1

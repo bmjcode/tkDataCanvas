@@ -49,6 +49,9 @@ class DataCanvas(tk.Frame):
       fg_shade (str)
         Default foreground color for shading alternate rows.
 
+      pad_x (int; default: 1)
+        Default horizontal padding for cells.
+
       scrollbars (str; default: "both")
         Which scrollbars to provide.
         Must be one of "vertical", "horizontal," "both", or "neither".
@@ -71,6 +74,13 @@ class DataCanvas(tk.Frame):
         """Return a new scrollable frame widget."""
 
         tk.Frame.__init__(self, master)
+
+        # Default horizontal padding for cells
+        if "pad_x" in kw:
+            self._pad_x = kw["pad_x"]
+            del kw["pad_x"]
+        else:
+            self._pad_x = self._DEFAULT_PAD_X
 
         # Which scrollbars to provide
         if "scrollbars" in kw:
@@ -433,7 +443,7 @@ class DataCanvas(tk.Frame):
                     text_anchor = "center"
 
                 # Add cell padding
-                pad_x = self.pad_x
+                pad_x = self._pad_x
                 tx += pad_x
                 width += 2 * pad_x
 
@@ -559,9 +569,9 @@ class DataCanvas(tk.Frame):
     _DEFAULT_BG_SHADE = "LightSteelBlue"
     _DEFAULT_FG_SHADE = "black"
 
+    # Default horizontal padding for cells
+    _DEFAULT_PAD_X = 1
+
     # Scrollbar-related configuration
     _DEFAULT_SCROLLBARS = "both"
     _VALID_SCROLLBARS = "vertical", "horizontal", "both", "neither"
-
-    # Default padding for cells
-    pad_x = 1

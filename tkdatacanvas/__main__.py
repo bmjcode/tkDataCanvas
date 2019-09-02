@@ -39,15 +39,30 @@ from . import DataCanvas
 class DataCanvasDemo(Frame):
     """A demonstration of the DataCanvas widget."""
 
-    def __init__(self, master=None):
+    def __init__(self, master=None, *, custom_colors=False):
         Frame.__init__(self, master)
         self.master = master
+
+        if custom_colors:
+            # Use a custom color palette quite distinct from the default
+            canvas_colors = {
+                "bg_color": "antique white",
+                "fg_color": "dark goldenrod",
+                "bg_header": "forest green",
+                "fg_header": "white",
+                "bg_shade": "light goldenrod",
+                "fg_shade": "maroon",
+            }
+        else:
+            canvas_colors = {}
 
         # The DataCanvas widget
         # This will be packed in display_file()
         c = self.data_canvas = DataCanvas(self,
                                           width=800,
-                                          height=600)
+                                          height=600,
+                                          pad_x=2,
+                                          **canvas_colors)
         c.bind_arrow_keys(master)
         c.bind_scroll_wheel(master)
 
@@ -122,7 +137,14 @@ def demo():
     root = Tk()
     root.title("tkDataCanvas")
 
-    d = DataCanvasDemo(root)
+    # Use a custom color palette if a "-c" argument is present
+    if "-c" in sys.argv[1:]:
+        custom_colors = True
+        sys.argv.remove("-c")
+    else:
+        custom_colors = False
+
+    d = DataCanvasDemo(root, custom_colors=custom_colors)
     d.pack(side="top", expand=1, fill="both")
 
     # If a CSV file was named on the command line, display it

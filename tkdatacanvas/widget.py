@@ -1,6 +1,5 @@
 """Implementation of the tabular data display widget."""
 
-import os
 import sys
 import numbers
 
